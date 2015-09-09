@@ -7,7 +7,7 @@ import by.bsuir.kovalev.jail.window.Handler;
 
 public class KeyInput extends KeyAdapter{
 	
-	Handler handler;
+	protected Handler handler;
 	
 	public KeyInput(Handler handler){
 		this.handler = handler;
@@ -15,11 +15,17 @@ public class KeyInput extends KeyAdapter{
 
 	public void keyPressed(KeyEvent e){
 		int key = e.getKeyCode();
-		for(int i = 0; i< handler.object.size(); i++){
+		for(int i = 0; i < handler.object.size(); i++){
 			GameObject tempObject = handler.object.get(i);
-			if(tempObject.getId() == ObjectId.Player){
-				if(key == KeyEvent.VK_D) tempObject.setVelocity_X(5);
-				if(key == KeyEvent.VK_A) tempObject.setVelocity_X(-5);
+			if(tempObject.getObjectId() == ObjectId.Player){
+				if(key == KeyEvent.VK_D) tempObject.set_x_velocity(15);
+				if(key == KeyEvent.VK_A) tempObject.set_x_velocity(-15);
+				if(key == KeyEvent.VK_SPACE && !tempObject.isJumping()){
+					tempObject.setIsJumping(true);
+					tempObject.set_y_velocity(-10);
+				} 
+				if(key == KeyEvent.VK_W) tempObject.set_y_velocity(-15);
+				if(key == KeyEvent.VK_S) tempObject.set_y_velocity(15);
 			}
 		}
 		
@@ -32,9 +38,11 @@ public class KeyInput extends KeyAdapter{
 		int key = e.getKeyCode();
 		for(int i = 0; i< handler.object.size(); i++){
 			GameObject tempObject = handler.object.get(i);
-			if(tempObject.getId() == ObjectId.Player){
-				if(key == KeyEvent.VK_D) tempObject.setVelocity_X(0);
-				if(key == KeyEvent.VK_A) tempObject.setVelocity_X(0);
+			if(tempObject.getObjectId() == ObjectId.Player){
+				if(key == KeyEvent.VK_D) tempObject.set_x_velocity(0);
+				if(key == KeyEvent.VK_A) tempObject.set_x_velocity(0);
+				//if(key == KeyEvent.VK_W) tempObject.set_y_velocity(0);
+				//if(key == KeyEvent.VK_S) tempObject.set_y_velocity(0);
 			}
 		}
 	}

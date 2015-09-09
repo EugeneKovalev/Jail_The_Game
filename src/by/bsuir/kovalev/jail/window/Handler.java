@@ -2,7 +2,6 @@ package by.bsuir.kovalev.jail.window;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
-import java.util.Random;
 
 import by.bsuir.kovalev.jail.framework.GameObject;
 import by.bsuir.kovalev.jail.framework.ObjectId;
@@ -16,7 +15,6 @@ public class Handler {
 		public void tick(){
 			for(int i = 0; i < object.size(); i++){
 				tempObject = object.get(i);
-				
 				tempObject.tick(object);
 			}
 		}
@@ -36,8 +34,15 @@ public class Handler {
 			this.object.remove(object);
 		}
 		
-		public void createLevel(){
-			for(int i = 0; i < Game.WIDTH+32; i+=32)
-				addObject(new Block(i, Game.HEIGHT-32, ObjectId.Block));
+		public void createLevelBasis(float frameWidth, float frameHeight){
+			int y = (int) (frameHeight - 32);
+			for(int x = 0; x < frameWidth; x+=32)
+				addObject(new Block(x, y, 0, ObjectId.Block));
+			int x = 0;
+			for(y = y-32; y > 0; y-=32)
+				addObject(new Block(x, y, 0, ObjectId.Block));
+			y = (int) (frameHeight - 128);
+			for(x = 400; x < 500; x+=32)
+				addObject(new Block(x, y, 0, ObjectId.Block));
 		}
 }
