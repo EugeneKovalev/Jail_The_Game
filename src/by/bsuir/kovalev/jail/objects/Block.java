@@ -1,6 +1,5 @@
 package by.bsuir.kovalev.jail.objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
@@ -12,10 +11,11 @@ import by.bsuir.kovalev.jail.window.Game;
 
 public class Block extends GameObject{
 	
-	Texture texture = Game.getInstance();
+	Texture texture = Game.getTextureInstance();
 	private int type;
+	public static final int BRICK_BLOCK = 0;
 
-	public Block(float x, float y, int type, ObjectId objectId) {
+	public Block(float x, float y, ObjectId objectId, int type ) {
 		super(x, y, objectId);
 		this.type = type;
 	}
@@ -23,11 +23,9 @@ public class Block extends GameObject{
 	public void tick(LinkedList<GameObject> object) {
 	}
 
-	public void render(Graphics g) {
+	public void render(Graphics graphics) {
 		if(type == 0)
-			g.drawImage(texture.block[0], (int)x, (int)y, null);
-		if(type == 0)
-			g.drawImage(texture.block[1], (int)x, (int)y, null);
+			graphics.drawImage(texture.block[0], (int)x, (int)y, null);
 	}
 
 	public Rectangle getBounds() {

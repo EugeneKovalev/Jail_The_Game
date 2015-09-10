@@ -8,8 +8,8 @@ public class Texture {
 	SpriteSheet bs, ps;
 	private BufferedImage block_sheet = null;
 	private BufferedImage player_sheet = null;
-	public BufferedImage[] block = new BufferedImage[2];
-	public BufferedImage[] player = new BufferedImage[1 ];
+	public BufferedImage[] block = new BufferedImage[1];
+	public BufferedImage[] player = new BufferedImage[1];
 	
 	public Texture(){
 		BufferedImageLoader loader = new BufferedImageLoader();
@@ -26,7 +26,6 @@ public class Texture {
 	
 	private void getTextures(){
 		block[0] = bs.grabImage(1, 1, 32, 32);
-		block[1] = bs.grabImage(1, 1, 32, 32);
 		player[0] = ps.grabImage(1, 1, 64, 190);
 	}
 }

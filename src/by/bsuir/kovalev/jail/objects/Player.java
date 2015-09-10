@@ -2,7 +2,6 @@ package by.bsuir.kovalev.jail.objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
@@ -17,11 +16,10 @@ public class Player extends GameObject{
 	private float width = 48;
 	private float height = 96;
 	private float gravity = 0.5f;
-	private final float MAX_SPEED = 100;
 	private Handler handler;
-	Texture texture = Game.getInstance();
+	Texture texture = Game.getTextureInstance();
 
-	public Player(float x, float y, Handler handler, ObjectId objectId) {
+	public Player(float x, float y, ObjectId objectId, Handler handler) {
 		super(x, y, objectId);
 		this.handler = handler;
 	}
@@ -31,15 +29,13 @@ public class Player extends GameObject{
 		y += y_velocity;
 		if (isFalling || isJumping){
 			y_velocity += gravity;
-			if(y_velocity > MAX_SPEED)
-				y_velocity = MAX_SPEED;
 		}
-		collision(object);
+		processCollisionCondition(object);
 	}
 	
-	private void collision(LinkedList<GameObject> object){
-		for(int i = 0; i < handler.object.size(); i++){
-			GameObject tempObject = handler.object.get(i);
+	private void processCollisionCondition(LinkedList<GameObject> object){
+		for(int i = 0; i < handler.objectList.size(); i++){
+			GameObject tempObject = handler.objectList.get(i);
 			if(tempObject.getObjectId() == ObjectId.Block){
 				
 				if(getBoundsTop().intersects(tempObject.getBounds())){
@@ -71,7 +67,8 @@ public class Player extends GameObject{
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.blue);
-		g.drawImage(texture.player[0], (int)x, (int)y, 48, 96, null);
+		g.fillRect((int)x, (int)y, 48, 96);
+		//g.drawImage(texture.player[0], (int)x, (int)y, 48, 96, null);
 	}
 
 	public Rectangle getBounds() {

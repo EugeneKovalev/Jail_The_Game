@@ -1,8 +1,6 @@
 package by.bsuir.kovalev.jail.window;
 
 import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
@@ -19,6 +17,7 @@ import by.bsuir.kovalev.jail.objects.Player;
 public class Game extends Canvas implements Runnable{
 
 	private static final long serialVersionUID = -3957124689436603261L;
+	private static final int TEXTURE_SIZE = 32;
 	private boolean isRunning = false;
 	private Thread thread;
 	protected Handler handler;
@@ -40,30 +39,16 @@ public class Game extends Canvas implements Runnable{
 	
 	public void run() {
 		initializeGameObjects();
+		this.requestFocus();
 		displayGameObjects();
 	}
 	
 	private void initializeGameObjects(){
 		handler = new Handler();
+		camera = new Camera();
 		texture = new Texture();
 		loadLevel();
-		setCameraPosition();
-		
-		
-		
 		this.addKeyListener(new KeyInput(handler));
-		
-	}
-	
-	private void loadLevel(){
-		BufferedImageLoader loader = new BufferedImageLoader();
-		levelImage = loader.loadImage("/level.png");
-		loadLevelFromImage(levelImage);
-	}
-	
-	private void setCameraPosition(){
-		camera = new Camera();
-		this.requestFocus();
 	}
 	
 	private void displayGameObjects(){
@@ -77,65 +62,71 @@ public class Game extends Canvas implements Runnable{
 			lastTime = currentTime;
 			while(delta >= 1){
 				tick();
-				
 				delta--;
-			}	render();
+			}	
+			renderGame();
 		}
 	}
 	
 	private void tick(){
 		handler.tick();
-		for(int i = 0; i < handler.object.size(); i++){
-			if(handler.object.get(i).getObjectId() == ObjectId.Player){
-				camera.tick(handler.object.get(i));
+		for(int i = 0; i < handler.objectList.size(); i++){
+			if(handler.objectList.get(i).getObjectId() == ObjectId.Player){
+				camera.tick(handler.objectList.get(i));
 			}
-		}
-		
+		}	
 	}
 	
-	private void render(){
+	private void renderGame(){
 		BufferStrategy bufferStrategy = this.getBufferStrategy();
 		if(bufferStrategy == null){
 			this.createBufferStrategy(3);
 			return;
 		}
-		Graphics g = bufferStrategy.getDrawGraphics();
-		Graphics2D g2d = (Graphics2D) g;
-		//////////////////////////////////////
-		
-		g.setColor(Color.black);
-		g.fillRect(0, 0, getWidth(), getHeight());
-		
-		g2d.translate(camera.getX(), camera.getY());
-		handler.render(g);
-		g2d.translate(-camera.getX(), -camera.getY());
-		///////////////////
-		g.dispose();
+		drawGame(bufferStrategy);
 		bufferStrategy.show();
 	}
 	
+	private void drawGame(BufferStrategy bufferStrategy){
+		Graphics2D graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
+		graphics2D.fillRect(0, 0, getWidth(), getHeight());
+		graphics2D.translate((int)camera.getX(), (int)camera.getY());
+		handler.render(graphics2D);
+		graphics2D.dispose();
+	}
+	
+	private void loadLevel(){
+		BufferedImageLoader loader = new BufferedImageLoader();
+		levelImage = loader.loadImage("/level.png");
+		loadLevelFromImage(levelImage);
+	}
+	
 	private void loadLevelFromImage(BufferedImage image){
-		int w = image.getWidth();
-		int h = image.getHeight();
-		
-		for(int xx = 0; xx<h; xx++){
-			for(int yy = 0; yy<w; yy++){
-				int pixel = image.getRGB(xx, yy); 
+		for(int x = 0; x < image.getHeight(); x++){
+			for(int y = 0; y < image.getWidth(); y++){
+				int pixel = image.getRGB(x, y); 
 				int red = (pixel >> 16) & 0xff;
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
-				if(red == 255 && green == 255 && blue == 255){
-					handler.addObject(new Block(xx*32, yy*32, 0, ObjectId.Block));
-				}
-				if(red == 0 && green == 0 && blue == 255){
-					handler.addObject(new Player(xx*32, yy*32, handler, ObjectId.Player));
-				}
+				checkForWhitePixel(x, y, red, green, blue);
+				checkForBluePixel(x, y, red, green, blue);
 			}
 		}
-		//System.out.p
 	}
 	
-	public static Texture getInstance(){
+	private void checkForWhitePixel(int x, int y, int red, int green, int blue){
+		if(red == 255 && green == 255 && blue == 255){
+			handler.addObject(new Block(x*TEXTURE_SIZE, y*TEXTURE_SIZE, ObjectId.Block, Block.BRICK_BLOCK));
+		}
+	}
+	
+	private void checkForBluePixel(int x, int y, int red, int green, int blue){
+		if(red == 0 && green == 0 && blue == 255){
+			handler.addObject(new Player(x*TEXTURE_SIZE, y*TEXTURE_SIZE, ObjectId.Player, handler));
+		}
+	}
+	
+	public static Texture getTextureInstance(){
 		return texture;
 	}
 	
