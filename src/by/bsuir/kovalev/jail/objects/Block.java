@@ -14,8 +14,9 @@ public class Block extends GameObject{
 	Texture texture = Game.getTextureInstance();
 	private int type;
 	public static final int BRICK_BLOCK = 0;
+	public static final int TEXTURE_SIZE = 32;
 
-	public Block(float x, float y, ObjectId objectId, int type ) {
+	public Block(int x, int y, ObjectId objectId, int type ) {
 		super(x, y, objectId);
 		this.type = type;
 	}
@@ -29,7 +30,7 @@ public class Block extends GameObject{
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle((int)x, (int)y, 32, 32);
+		return new Rectangle(x, y, Block.TEXTURE_SIZE, Block.TEXTURE_SIZE);
 	}
 
 }

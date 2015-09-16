@@ -1,23 +1,21 @@
 package by.bsuir.kovalev.jail.framework;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.LinkedList;
 
 public abstract class GameObject {
 
 	protected ObjectId objectId;
-	protected float x;
-	protected float y;
+	protected int x;
+	protected int y;
 	protected float x_velocity; 
 	protected float y_velocity;
 	protected boolean isFalling;
 	protected boolean isJumping;
 	public abstract void tick(LinkedList<GameObject> object);
 	public abstract void render(Graphics g);
-	public abstract Rectangle getBounds();
 	
-	public GameObject(float x, float y, ObjectId objectId){
+	public GameObject(int x, int y, ObjectId objectId){
 		this.objectId = objectId;
 		this.x = x;
 		this.y = y;
@@ -31,19 +29,19 @@ public abstract class GameObject {
 		return objectId;
 	}
 	
-	public float getX() {
+	public int getX() {
 		return x;
 	}
 	
-	public void setX(float x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 	
-	public float getY() {
+	public int getY() {
 		return y;
 	}
 	
-	public void setY(float y) {
+	public void setY(int y) {
 		this.y = y;
 	}
 	

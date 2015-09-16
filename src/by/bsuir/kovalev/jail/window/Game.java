@@ -17,13 +17,13 @@ import by.bsuir.kovalev.jail.objects.Player;
 public class Game extends Canvas implements Runnable{
 
 	private static final long serialVersionUID = -3957124689436603261L;
-	private static final int TEXTURE_SIZE = 32;
 	private boolean isRunning = false;
 	private Thread thread;
 	protected Handler handler;
 	protected Camera camera;
 	static Texture texture;
 	private BufferedImage levelImage = null;
+	private BufferedImage background = null;
 	
 	public static void main(String args[]){
 		new Window(800, 600, "Jail The Game", new Game());
@@ -90,6 +90,7 @@ public class Game extends Canvas implements Runnable{
 	private void drawGame(BufferStrategy bufferStrategy){
 		Graphics2D graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
 		graphics2D.fillRect(0, 0, getWidth(), getHeight());
+		graphics2D.drawImage(background, 0, 0, this);
 		graphics2D.translate((int)camera.getX(), (int)camera.getY());
 		handler.render(graphics2D);
 		graphics2D.dispose();
@@ -98,6 +99,7 @@ public class Game extends Canvas implements Runnable{
 	private void loadLevel(){
 		BufferedImageLoader loader = new BufferedImageLoader();
 		levelImage = loader.loadImage("/level.png");
+		background = loader.loadImage("/background.png");
 		loadLevelFromImage(levelImage);
 	}
 	
@@ -116,13 +118,13 @@ public class Game extends Canvas implements Runnable{
 	
 	private void checkForWhitePixel(int x, int y, int red, int green, int blue){
 		if(red == 255 && green == 255 && blue == 255){
-			handler.addObject(new Block(x*TEXTURE_SIZE, y*TEXTURE_SIZE, ObjectId.Block, Block.BRICK_BLOCK));
+			handler.addObject(new Block(x*Block.TEXTURE_SIZE, y*Block.TEXTURE_SIZE, ObjectId.Block, Block.BRICK_BLOCK));
 		}
 	}
 	
 	private void checkForBluePixel(int x, int y, int red, int green, int blue){
 		if(red == 0 && green == 0 && blue == 255){
-			handler.addObject(new Player(x*TEXTURE_SIZE, y*TEXTURE_SIZE, ObjectId.Player, handler));
+			handler.addObject(new Player(x*Block.TEXTURE_SIZE, y*Block.TEXTURE_SIZE, ObjectId.Player, handler));
 		}
 	}
 	
