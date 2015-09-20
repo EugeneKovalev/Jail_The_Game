@@ -26,7 +26,7 @@ public class Block extends GameObject{
 
 	public void render(Graphics graphics) {
 		if(type == 0)
-			graphics.drawImage(texture.block[0], (int)x, (int)y, null);
+			graphics.drawImage(texture.block[0], x, y, null);
 	}
 
 	public Rectangle getBounds() {

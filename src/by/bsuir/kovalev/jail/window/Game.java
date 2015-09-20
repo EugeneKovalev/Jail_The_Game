@@ -16,6 +16,7 @@ import by.bsuir.kovalev.jail.objects.Player;
 
 public class Game extends Canvas implements Runnable{
 
+	private static final int ONE_SECOND_IN_NANOS = 1000000000;
 	private static final long serialVersionUID = -3957124689436603261L;
 	private boolean isRunning = false;
 	private Thread thread;
@@ -53,12 +54,12 @@ public class Game extends Canvas implements Runnable{
 	
 	private void displayGameObjects(){
 		long lastTime = System.nanoTime();
-		double amountOfTicks = 60;
-		double ns = 1000000000 / amountOfTicks;
+		double amountOfTicksPerSecond = 6;
+		double timeForOneTickInNanos = ONE_SECOND_IN_NANOS / amountOfTicksPerSecond;
 		double delta = 0;
 		while(isRunning){
 			long currentTime = System.nanoTime();
-			delta += (currentTime - lastTime) / ns;
+			delta += (currentTime - lastTime) / timeForOneTickInNanos;
 			lastTime = currentTime;
 			while(delta >= 1){
 				tick();

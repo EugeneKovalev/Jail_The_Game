@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
+import javax.swing.JOptionPane;
+
 import by.bsuir.kovalev.jail.framework.GameObject;
 import by.bsuir.kovalev.jail.framework.ObjectId;
 import by.bsuir.kovalev.jail.framework.Texture;
@@ -31,10 +33,10 @@ public class Player extends GameObject{
 		if (isFalling || isJumping){
 			y_velocity += gravity;
 		}
-		processCollisionCondition(object);
+		processCollisionCondition();
 	}
 	
-	private void processCollisionCondition(LinkedList<GameObject> object){
+	private void processCollisionCondition(){
 		for(int i = 0; i < handler.objectList.size(); i++){
 			GameObject tempObject = handler.objectList.get(i);
 			if(tempObject.getObjectId() == ObjectId.Block){
@@ -48,8 +50,8 @@ public class Player extends GameObject{
 
 	public void render(Graphics g) {
 		g.setColor(Color.blue);
-		g.fillRect((int)x, (int)y, width, height);
-		//g.drawImage(texture.player[0], (int)x, (int)y, 48, 96, null);
+		g.fillRect(x, y, width, height);
+		g.drawImage(texture.player[0], x, y, width, height, null);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(Color.red);
 		g2d.draw(getBoundsTop());
@@ -78,36 +80,42 @@ public class Player extends GameObject{
 		return new Rectangle(x, y+height/4, width/4, height/2);
 	}
 	
-	private void checkForTopIntersectionWithPlayer(Block block){
+	private boolean checkForTopIntersectionWithPlayer(Block block){
 		if(getBoundsTop().intersects(block.getBounds())){
-			System.out.println("Top");
-			//JOptionPane.showMessageDialog(null, "Top");
+			System.out.println(this.y);
+			if(checkForLeftIntersectionWithPlayer(block)|| checkForRightIntersectionWithPlayer(block)) return false;
+			System.out.println("BAD");
 			y = block.getY() + Block.TEXTURE_SIZE;
 			y_velocity = 0;
+			return true;
 		}
+		else return false;
 	}
 	
-	private void checkForBottomIntersectionWithPlayer(Block block){
+	private boolean checkForBottomIntersectionWithPlayer(Block block){
 		if(getBoundsBottom().intersects(block.getBounds())){
-			System.out.println("Bottom");
 			y = block.getY() - height;
 			y_velocity = 0;
 			isJumping = false;
+			return true;
 		}
+		else return false;
 	}
 	
-	private void checkForLeftIntersectionWithPlayer(Block block){
+	private boolean checkForLeftIntersectionWithPlayer(Block block){
 		if(getBoundsLeft().intersects(block.getBounds())){
-			System.out.println("Left");
-			//JOptionPane.showMessageDialog(null, "Left");
-			x = block.getX() + Block.TEXTURE_SIZE + 3;
+			System.out.println(this.y);
+			x = block.getX() + Block.TEXTURE_SIZE;
+			return true;
 		}
+		else return false;
 	}
 	
-	private void checkForRightIntersectionWithPlayer(Block block){
+	private boolean checkForRightIntersectionWithPlayer(Block block){
 		if(getBoundsRight().intersects(block.getBounds())){
-			System.out.println("Right");
-			x = block.getX() - width - 3;
+			x = block.getX() - width;
+			return true;
 		}
+		else return false;
 	}
 }
