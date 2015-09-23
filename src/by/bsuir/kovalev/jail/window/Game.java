@@ -13,6 +13,7 @@ import by.bsuir.kovalev.jail.framework.ObjectId;
 import by.bsuir.kovalev.jail.framework.Texture;
 import by.bsuir.kovalev.jail.objects.Block;
 import by.bsuir.kovalev.jail.objects.Player;
+import by.bsuir.kovalev.jail.objects.Security;
 
 public class Game extends Canvas implements Runnable{
 
@@ -54,7 +55,7 @@ public class Game extends Canvas implements Runnable{
 	
 	private void displayGameObjects(){
 		long lastTime = System.nanoTime();
-		double amountOfTicksPerSecond = 6;
+		double amountOfTicksPerSecond = 60;
 		double timeForOneTickInNanos = ONE_SECOND_IN_NANOS / amountOfTicksPerSecond;
 		double delta = 0;
 		while(isRunning){
@@ -113,6 +114,7 @@ public class Game extends Canvas implements Runnable{
 				int blue = (pixel) & 0xff;
 				checkForWhitePixel(x, y, red, green, blue);
 				checkForBluePixel(x, y, red, green, blue);
+				checkForRedPixel(x, y, red, green, blue);
 			}
 		}
 	}
@@ -126,6 +128,12 @@ public class Game extends Canvas implements Runnable{
 	private void checkForBluePixel(int x, int y, int red, int green, int blue){
 		if(red == 0 && green == 0 && blue == 255){
 			handler.addObject(new Player(x*Block.TEXTURE_SIZE, y*Block.TEXTURE_SIZE, ObjectId.Player, handler));
+		}
+	}
+	
+	private void checkForRedPixel(int x, int y, int red, int green, int blue){
+		if(red == 255 && green == 0 && blue == 0){
+			handler.addObject(new Security(x*Block.TEXTURE_SIZE, y*Block.TEXTURE_SIZE, ObjectId.Security, handler));
 		}
 	}
 	

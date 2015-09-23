@@ -2,9 +2,9 @@ package by.bsuir.kovalev.jail.objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.LinkedList;
+import java.util.Random;
 
 import by.bsuir.kovalev.jail.framework.GameObject;
 import by.bsuir.kovalev.jail.framework.ObjectId;
@@ -12,21 +12,24 @@ import by.bsuir.kovalev.jail.framework.Texture;
 import by.bsuir.kovalev.jail.window.Game;
 import by.bsuir.kovalev.jail.window.Handler;
 
-public class Player extends GameObject{
-	
+public class Security extends GameObject{
+
 	private int width = 48;
 	private int height = 96;
 	private float gravity = 0.5f;
 	private Handler handler;
 	Texture texture = Game.getTextureInstance();
 
-	public Player(int x, int y, ObjectId objectId, Handler handler) {
+	public Security(int x, int y, ObjectId objectId, Handler handler) {
 		super(x, y, objectId);
 		this.handler = handler;
 	}
 
 	public void tick(LinkedList<GameObject> object) {
-		x += x_velocity;
+		Random rnd = new Random();
+		int a=rnd.nextInt(3);
+		System.out.println(a);
+		x += a;
 		y += y_velocity;
 		if (isFalling || isJumping){
 			y_velocity += gravity;
@@ -44,38 +47,6 @@ public class Player extends GameObject{
 				checkForRightIntersectionWithPlayer((Block)tempObject);	
 			}
 		}
-	}
-
-	public void render(Graphics g) {
-		g.setColor(Color.blue);
-		g.fillRect(x, y, width, height);
-		g.drawImage(texture.player[0], x, y, width, height, null);
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setColor(Color.red);
-		g2d.draw(getBoundsTop());
-		g2d.draw(getBoundsLeft());
-		g2d.draw(getBoundsRight());
-		g2d.draw(getBoundsBottom());
-	}
-	
-	public Rectangle getBounds() {
-		return null;
-	}
-
-	public Rectangle getBoundsTop() {
-		return new Rectangle(x+2*width/5, y, width/5, height/2);
-	}
-	
-	public Rectangle getBoundsBottom() {
-		return new Rectangle(x+2*width/5, y+height/2, width/5, height/2);
-	}
-	
-	public Rectangle getBoundsRight() {
-		return new Rectangle(x+3*width/4, y+height/4, width/4, height/2);
-	}
-	
-	public Rectangle getBoundsLeft() {
-		return new Rectangle(x, y+height/4, width/4, height/2);
 	}
 	
 	private boolean checkForTopIntersectionWithPlayer(Block block){
@@ -113,4 +84,31 @@ public class Player extends GameObject{
 		}
 		else return false;
 	}
+
+	public void render(Graphics graphics) {
+		graphics.setColor(Color.red);
+		graphics.fillRect(x, y, width, height);
+		graphics.drawImage(texture.security[0], x, y, width, height, null);
+	}
+
+	public Rectangle getBounds() {
+		return null;
+	}
+
+	public Rectangle getBoundsTop() {
+		return new Rectangle(x+2*width/5, y, width/5, height/2);
+	}
+	
+	public Rectangle getBoundsBottom() {
+		return new Rectangle(x+2*width/5, y+height/2, width/5, height/2);
+	}
+	
+	public Rectangle getBoundsRight() {
+		return new Rectangle(x+3*width/4, y+height/4, width/4, height/2);
+	}
+	
+	public Rectangle getBoundsLeft() {
+		return new Rectangle(x, y+height/4, width/4, height/2);
+	}
+	
 }
