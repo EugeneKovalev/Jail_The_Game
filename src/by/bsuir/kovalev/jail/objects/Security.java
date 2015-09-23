@@ -7,12 +7,13 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import by.bsuir.kovalev.jail.framework.GameObject;
+import by.bsuir.kovalev.jail.framework.HumanoidGameObject;
 import by.bsuir.kovalev.jail.framework.ObjectId;
 import by.bsuir.kovalev.jail.framework.Texture;
 import by.bsuir.kovalev.jail.window.Game;
 import by.bsuir.kovalev.jail.window.Handler;
 
-public class Security extends GameObject{
+public class Security extends HumanoidGameObject{
 
 	private int width = 48;
 	private int height = 96;

@@ -7,12 +7,13 @@ import java.awt.Rectangle;
 import java.util.LinkedList;
 
 import by.bsuir.kovalev.jail.framework.GameObject;
+import by.bsuir.kovalev.jail.framework.HumanoidGameObject;
 import by.bsuir.kovalev.jail.framework.ObjectId;
 import by.bsuir.kovalev.jail.framework.Texture;
 import by.bsuir.kovalev.jail.window.Game;
 import by.bsuir.kovalev.jail.window.Handler;
 
-public class Player extends GameObject{
+public class Player extends HumanoidGameObject{
 	
 	private int width = 48;
 	private int height = 96;

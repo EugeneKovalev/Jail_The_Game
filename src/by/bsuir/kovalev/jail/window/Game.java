@@ -3,9 +3,6 @@ package by.bsuir.kovalev.jail.window;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-
-
-
 import java.awt.image.BufferedImage;
 
 import by.bsuir.kovalev.jail.framework.KeyInput;

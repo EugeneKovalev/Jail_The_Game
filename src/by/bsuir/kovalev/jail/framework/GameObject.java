@@ -11,7 +11,7 @@ public abstract class GameObject {
 	protected float x_velocity; 
 	protected float y_velocity;
 	protected boolean isFalling;
-	protected boolean isJumping;
+	
 	public abstract void tick(LinkedList<GameObject> object);
 	public abstract void render(Graphics g);
 	
@@ -21,8 +21,7 @@ public abstract class GameObject {
 		this.y = y;
 		this.x_velocity = 0;
 		this.y_velocity = 0;
-		this.isFalling = true;
-		this.isJumping = false;
+		this.isFalling = false;
 	}
 	
 	public ObjectId getObjectId() {
@@ -67,14 +66,6 @@ public abstract class GameObject {
 
 	public void setIsFalling(boolean isFalling) {
 		this.isFalling = isFalling;
-	}
-
-	public boolean isJumping() {
-		return isJumping;
-	}
-
-	public void setIsJumping(boolean isJumping) {
-		this.isJumping = isJumping;
 	}
 
 }
