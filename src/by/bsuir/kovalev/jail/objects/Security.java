@@ -26,9 +26,9 @@ public class Security extends HumanoidGameObject{
 		Random rnd = new Random();
 		int a=rnd.nextInt(3);
 		x += a;
-		y += y_velocity;
+		y += yVelocity;
 		if (isFalling || isJumping){
-			y_velocity += gravity;
+			yVelocity += gravity;
 		}
 		processCollisionCondition(handler);
 	}

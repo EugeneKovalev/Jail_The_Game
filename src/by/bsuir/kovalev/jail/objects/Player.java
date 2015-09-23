@@ -22,10 +22,10 @@ public class Player extends HumanoidGameObject{
 	}
 
 	public void tick(LinkedList<GameObject> object) {
-		x += x_velocity;
-		y += y_velocity;
+		x += xVelocity;
+		y += yVelocity;
 		if (isFalling || isJumping){
-			y_velocity += gravity;
+			yVelocity += gravity;
 		}
 		processCollisionCondition(handler);
 	}

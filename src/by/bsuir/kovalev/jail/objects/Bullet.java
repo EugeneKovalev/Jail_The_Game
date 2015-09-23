@@ -1,0 +1,50 @@
+package by.bsuir.kovalev.jail.objects;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.LinkedList;
+
+import by.bsuir.kovalev.jail.framework.GameObject;
+import by.bsuir.kovalev.jail.framework.HumanoidGameObject;
+import by.bsuir.kovalev.jail.framework.ObjectId;
+import by.bsuir.kovalev.jail.framework.Texture;
+import by.bsuir.kovalev.jail.window.Game;
+import by.bsuir.kovalev.jail.window.Handler;
+
+public class Bullet extends GameObject{
+
+	Texture texture = Game.getTextureInstance();
+	private Handler handler;
+	
+	public Bullet(int x, int y, int width, int height, ObjectId objectId, Handler handler) {
+		super(x, y, width, height, objectId);
+		this.xVelocity = 20;
+		this.yVelocity = 20;
+		this.handler = handler;
+	}
+
+	public void tick(LinkedList<GameObject> object) {
+		x += xVelocity;
+		processWoundingCondition(handler);
+	}
+
+	public void render(Graphics g) {
+		g.setColor(Color.red);
+		g.fillRect(x, y, 3, 1);
+	}
+
+	private void processWoundingCondition(Handler handler){
+		for(int i = 0; i < handler.objectList.size(); i++){
+			GameObject tempObject = handler.objectList.get(i);
+			try{
+				tempObject = (HumanoidGameObject)tempObject;
+				if(tempObject.getObjectId() == ObjectId.Security){
+					if(tempObject.getBounds().intersects(this.getBounds())){
+						handler.objectList.remove(tempObject);
+						handler.objectList.remove(this);
+					}
+				}
+			}catch(Exception e){}
+		}
+	}
+}

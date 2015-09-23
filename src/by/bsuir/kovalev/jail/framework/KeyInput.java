@@ -23,7 +23,7 @@ public class KeyInput extends KeyAdapter{
 				if(key == KeyEvent.VK_SPACE && !((HumanoidGameObject)tempObject).isJumping()){
 					((HumanoidGameObject)tempObject).setIsJumping(true);
 					((HumanoidGameObject)tempObject).set_y_velocity(-10);
-				} 
+				}
 			}
 		}
 		

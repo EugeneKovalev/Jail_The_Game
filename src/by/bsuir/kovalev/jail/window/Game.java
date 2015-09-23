@@ -6,6 +6,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import by.bsuir.kovalev.jail.framework.KeyInput;
+import by.bsuir.kovalev.jail.framework.MouseInput;
 import by.bsuir.kovalev.jail.framework.ObjectId;
 import by.bsuir.kovalev.jail.framework.Texture;
 import by.bsuir.kovalev.jail.objects.Block;
@@ -48,6 +49,7 @@ public class Game extends Canvas implements Runnable{
 		texture = new Texture();
 		loadLevel();
 		this.addKeyListener(new KeyInput(handler));
+		this.addMouseListener(new MouseInput(handler));
 	}
 	
 	private void displayGameObjects(){

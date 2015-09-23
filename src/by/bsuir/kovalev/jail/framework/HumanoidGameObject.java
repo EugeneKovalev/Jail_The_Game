@@ -23,10 +23,6 @@ public abstract class HumanoidGameObject extends GameObject{
 		this.isJumping = isJumping;
 	}
 	
-	public Rectangle getBounds(int width, int height) {
-		return new Rectangle(x, y, width, height);
-	}
-
 	public Rectangle getBoundsTop(int width, int height) {
 		return new Rectangle(x+2*width/5, y, width/5, height/2);
 	}
@@ -59,7 +55,7 @@ public abstract class HumanoidGameObject extends GameObject{
 		if(getBoundsTop(width, height).intersects(block.getBounds())){
 			if(checkForLeftIntersectionWithPlayer(block)|| checkForRightIntersectionWithPlayer(block)) return false;
 			y = block.getY() + Block.TEXTURE_SIZE;
-			y_velocity = 0;
+			yVelocity = 0;
 			return true;
 		}
 		else return false;
@@ -68,7 +64,7 @@ public abstract class HumanoidGameObject extends GameObject{
 	private boolean checkForBottomIntersectionWithPlayer(Block block){
 		if(getBoundsBottom(width, height).intersects(block.getBounds())){
 			y = block.getY() - height;
-			y_velocity = 0;
+			yVelocity = 0;
 			isJumping = false;
 			return true;
 		}
