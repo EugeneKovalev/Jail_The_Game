@@ -126,7 +126,7 @@ public class Game extends Canvas implements Runnable{
 	
 	private void checkForBluePixel(int x, int y, int red, int green, int blue){
 		if(red == 0 && green == 0 && blue == 255){
-			handler.addObject(new Player(x*Block.TEXTURE_SIZE, y*Block.TEXTURE_SIZE, 48, 96, ObjectId.Player, handler));
+			handler.addObject(new Player(x*Block.TEXTURE_SIZE, y*Block.TEXTURE_SIZE, 66, 96, ObjectId.Player, handler));
 		}
 	}
 	

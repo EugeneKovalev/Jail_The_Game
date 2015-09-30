@@ -30,7 +30,7 @@ public class Texture {
 	
 	private void getTextures(){
 		block[0] = bs.grabImage(1, 1, 32, 32);
-		player[0] = ps.grabImage(1, 1, 64, 190);
+		player[0] = ps.grabImage(1, 1, 66, 96);
 		security[0] = ss.grabImage(1, 1, 64, 190);
 	}
 }

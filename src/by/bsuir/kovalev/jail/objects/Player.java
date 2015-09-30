@@ -1,5 +1,6 @@
 package by.bsuir.kovalev.jail.objects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
