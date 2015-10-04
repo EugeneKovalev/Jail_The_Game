@@ -48,7 +48,8 @@ public class Game extends Canvas implements Runnable{
 		camera = new Camera();
 		texture = new Texture();
 		loadLevel();
-		this.addKeyListener(new KeyInput(handler));
+		KeyInput a = new KeyInput(handler);
+		this.addKeyListener(a);
 		this.addMouseListener(new MouseInput(handler));
 	}
 	

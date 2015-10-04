@@ -2,12 +2,11 @@ package by.bsuir.kovalev.jail.framework;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 
 import by.bsuir.kovalev.jail.objects.Bullet;
 import by.bsuir.kovalev.jail.window.Handler;
 
-public class MouseInput extends MouseAdapter implements MouseMotionListener{
+public class MouseInput extends MouseAdapter{
 
 	protected Handler handler;
 	
@@ -23,7 +22,7 @@ public class MouseInput extends MouseAdapter implements MouseMotionListener{
 				if(mouseKey == MouseEvent.BUTTON1){
 					int x = tempObject.getX();
 					int y = tempObject.getY();
-					handler.addObject(new Bullet(x, y, 3, 1, ObjectId.Bullet, handler));
+					handler.addObject(new Bullet(x+30, y+10, 3, 1, ObjectId.Bullet, handler));
 				} 
 			}
 		}
