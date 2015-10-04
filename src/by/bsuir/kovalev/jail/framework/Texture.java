@@ -10,7 +10,7 @@ public class Texture {
 	private BufferedImage player_sheet = null;
 	private BufferedImage security_sheet = null;
 	public BufferedImage[] block = new BufferedImage[1];
-	public BufferedImage[] player = new BufferedImage[12];
+	public BufferedImage[] player = new BufferedImage[20];
 	public BufferedImage[] security = new BufferedImage[1];
 	
 	public Texture(){
@@ -42,6 +42,14 @@ public class Texture {
 		player[9] = ps.grabImage(1, 10, 54, 96);
 		player[10] = ps.grabImage(1, 11, 52, 96);
 		player[11] = ps.grabImage(1, 12, 58, 96);
+		player[12] = ps.grabImage(1, 13, 66, 96);
+		player[13] = ps.grabImage(1, 14, 78, 96);
+		player[14] = ps.grabImage(1, 15, 97, 96);
+		player[15] = ps.grabImage(1, 16, 92, 96);
+		player[16] = ps.grabImage(1, 17, 77, 96);
+		player[17] = ps.grabImage(1, 18, 54, 96);
+		player[18] = ps.grabImage(1, 19, 52, 96);
+		player[19] = ps.grabImage(1, 20, 58, 96);
 		security[0] = ss.grabImage(1, 1, 64, 190);
 	}
 }

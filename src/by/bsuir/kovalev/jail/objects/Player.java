@@ -1,8 +1,6 @@
 package by.bsuir.kovalev.jail.objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.LinkedList;
 
 import by.bsuir.kovalev.jail.framework.GameObject;
@@ -14,7 +12,7 @@ import by.bsuir.kovalev.jail.window.Handler;
 
 public class Player extends HumanoidGameObject{
 	
-	public static int hui = 0;
+	public static int imagePart = 0;
 	private float gravity = 0.5f;
 	private Handler handler;
 	Texture texture = Game.getTextureInstance();
@@ -34,15 +32,8 @@ public class Player extends HumanoidGameObject{
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(texture.player[hui], x, y, width, height, null);
-		this.setWidth(texture.player[hui].getWidth());
-		//System.out.println(hui);
-		//Graphics2D g2d = (Graphics2D) g;
-		//g2d.setColor(Color.red);
-		//g2d.draw(getBoundsTop(width, height));
-		//g2d.draw(getBoundsLeft(width, height));
-		//g2d.draw(getBoundsRight(width, height));
-		//g2d.draw(getBoundsBottom(width, height));
+		g.drawImage(texture.player[imagePart], x, y, width, height, null);
+		this.setWidth(texture.player[imagePart].getWidth());
 	}
 
 }

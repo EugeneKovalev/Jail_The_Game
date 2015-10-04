@@ -2,6 +2,7 @@ package by.bsuir.kovalev.jail.window;
 
 import java.awt.Canvas;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -19,6 +20,7 @@ public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = -3957124689436603261L;
 	private boolean isRunning = false;
 	private Thread thread;
+	private KeyInput keyInput;
 	protected Handler handler;
 	protected Camera camera;
 	static Texture texture;
@@ -48,8 +50,8 @@ public class Game extends Canvas implements Runnable{
 		camera = new Camera();
 		texture = new Texture();
 		loadLevel();
-		KeyInput a = new KeyInput(handler);
-		this.addKeyListener(a);
+		keyInput = new KeyInput(handler);
+		this.addKeyListener(keyInput);
 		this.addMouseListener(new MouseInput(handler));
 	}
 	
@@ -58,6 +60,7 @@ public class Game extends Canvas implements Runnable{
 		double amountOfTicksPerSecond = 60;
 		double timeForOneTickInNanos = ONE_SECOND_IN_NANOS / amountOfTicksPerSecond;
 		double delta = 0;
+		int animationLimiter = 0;
 		while(isRunning){
 			long currentTime = System.nanoTime();
 			delta += (currentTime - lastTime) / timeForOneTickInNanos;
@@ -65,7 +68,12 @@ public class Game extends Canvas implements Runnable{
 			while(delta >= 1){
 				tick();
 				delta--;
-			}	
+			}
+			if (animationLimiter == amountOfTicksPerSecond/15){
+				keyInput.checkButtonsState();
+				animationLimiter = 0;
+			}
+			animationLimiter++;
 			renderGame();
 		}
 	}
