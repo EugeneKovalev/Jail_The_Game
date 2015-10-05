@@ -2,9 +2,15 @@ package by.bsuir.kovalev.jail.window;
 
 import java.awt.Canvas;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import by.bsuir.kovalev.jail.framework.KeyInput;
 import by.bsuir.kovalev.jail.framework.MouseInput;
@@ -27,14 +33,27 @@ public class Game extends Canvas implements Runnable{
 	private BufferedImage levelImage = null;
 	private BufferedImage background = null;
 	
-	public static void main(String args[]){
+	public static void main(String args[]) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
 		new Window(800, 600, "Jail The Game", new Game());
 	}
+	
 	
 	public synchronized void start(){
 		if(isRunning)
 			return;
 		isRunning = true;
+		try{
+		    AudioInputStream audioInputStream =
+		        AudioSystem.getAudioInputStream(
+		            this.getClass().getResource("/soundtrack.wav"));
+		    Clip clip = AudioSystem.getClip();
+		    clip.open(audioInputStream);
+		    clip.start();
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
 		thread = new Thread(this);
 		thread.start();
 	}
