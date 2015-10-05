@@ -18,8 +18,6 @@ public class Bullet extends GameObject{
 	
 	public Bullet(int x, int y, int width, int height, ObjectId objectId, Handler handler) {
 		super(x, y, width, height, objectId);
-		this.xVelocity = 20;
-		this.yVelocity = 20;
 		this.handler = handler;
 	}
 
@@ -36,15 +34,15 @@ public class Bullet extends GameObject{
 	private void processWoundingCondition(Handler handler){
 		for(int i = 0; i < handler.objectList.size(); i++){
 			GameObject tempObject = handler.objectList.get(i);
-			try{
-				tempObject = (HumanoidGameObject)tempObject;
-				if(tempObject.getObjectId() == ObjectId.Security){
-					if(tempObject.getBounds().intersects(this.getBounds())){
+			if(tempObject.getBounds().intersects(this.getBounds())){
+					if(tempObject.getObjectId() == ObjectId.Security){
 						handler.objectList.remove(tempObject);
 						handler.objectList.remove(this);
 					}
+					else if (tempObject.getObjectId() == ObjectId.Block){
+						handler.objectList.remove(this);
+					}
 				}
-			}catch(Exception e){}
 		}
 	}
 }

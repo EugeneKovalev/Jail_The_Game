@@ -6,15 +6,13 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import by.bsuir.kovalev.jail.framework.KeyInput;
 import by.bsuir.kovalev.jail.framework.MouseInput;
 import by.bsuir.kovalev.jail.framework.ObjectId;
+import by.bsuir.kovalev.jail.framework.Sound;
 import by.bsuir.kovalev.jail.framework.Texture;
 import by.bsuir.kovalev.jail.objects.Block;
 import by.bsuir.kovalev.jail.objects.Player;
@@ -42,18 +40,8 @@ public class Game extends Canvas implements Runnable{
 		if(isRunning)
 			return;
 		isRunning = true;
-		try{
-		    AudioInputStream audioInputStream =
-		        AudioSystem.getAudioInputStream(
-		            this.getClass().getResource("/soundtrack.wav"));
-		    Clip clip = AudioSystem.getClip();
-		    clip.open(audioInputStream);
-		    clip.start();
-		}
-		catch(Exception ex)
-		{
-			System.out.println(ex);
-		}
+		Sound soundtrack = new Sound("/soundtrack.wav");
+		//soundtrack.start();
 		thread = new Thread(this);
 		thread.start();
 	}
