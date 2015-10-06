@@ -29,7 +29,12 @@ public class Game extends Canvas implements Runnable{
 	protected Camera camera;
 	static Texture texture;
 	private BufferedImage levelImage = null;
-	private BufferedImage background = null;
+	private BufferedImage brokenTileWall = null;
+	private BufferedImage mossyWall = null;
+	private BufferedImage dirtyWall = null;
+	private BufferedImage metalWall = null;
+	private BufferedImage rustyDoor = null;
+	private BufferedImage exitLabel = null;
 	
 	public static void main(String args[]) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
 		new Window(800, 600, "Jail The Game", new Game());
@@ -76,7 +81,7 @@ public class Game extends Canvas implements Runnable{
 				tick();
 				delta--;
 			}
-			if (animationLimiter == amountOfTicksPerSecond/15){
+			if (animationLimiter == amountOfTicksPerSecond/5){
 				keyInput.checkButtonsState();
 				animationLimiter = 0;
 			}
@@ -107,8 +112,17 @@ public class Game extends Canvas implements Runnable{
 	private void drawGame(BufferStrategy bufferStrategy){
 		Graphics2D graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
 		graphics2D.fillRect(0, 0, getWidth(), getHeight());
-		graphics2D.drawImage(background, 0, 0, this);
 		graphics2D.translate((int)camera.getX(), (int)camera.getY());
+		for(int i=0; i<8; i++)
+			graphics2D.drawImage(brokenTileWall, 300+i*brokenTileWall.getWidth(), 32, this);
+		for(int i=0; i<3; i++)
+			graphics2D.drawImage(mossyWall, 300+i*mossyWall.getWidth(), 448, this);
+		for(int i=0; i<4; i++)
+			graphics2D.drawImage(dirtyWall, 300+i*dirtyWall.getWidth(), 255, this);
+		for(int i=0; i<9; i++)
+			graphics2D.drawImage(metalWall, 300+i*metalWall.getWidth(), 160, this);
+		graphics2D.drawImage(rustyDoor, 750, 32, this);
+		graphics2D.drawImage(exitLabel, 765, 42, this);
 		handler.render(graphics2D);
 		graphics2D.dispose();
 	}
@@ -116,7 +130,12 @@ public class Game extends Canvas implements Runnable{
 	private void loadLevel(){
 		BufferedImageLoader loader = new BufferedImageLoader();
 		levelImage = loader.loadImage("/level.png");
-		background = loader.loadImage("/background.png");
+		brokenTileWall = loader.loadImage("/wall.png");
+		mossyWall = loader.loadImage("/mossy_wall.png");
+		dirtyWall = loader.loadImage("/dirty_wall.png");
+		metalWall = loader.loadImage("/metal_wall.png");
+		rustyDoor = loader.loadImage("/rusty_door.png");
+		exitLabel = loader.loadImage("/exitLabel.png");
 		loadLevelFromImage(levelImage);
 	}
 	
