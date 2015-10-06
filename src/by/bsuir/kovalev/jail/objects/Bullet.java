@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 
 import by.bsuir.kovalev.jail.framework.GameObject;
-import by.bsuir.kovalev.jail.framework.HumanoidGameObject;
 import by.bsuir.kovalev.jail.framework.ObjectId;
 import by.bsuir.kovalev.jail.framework.Texture;
 import by.bsuir.kovalev.jail.window.Game;

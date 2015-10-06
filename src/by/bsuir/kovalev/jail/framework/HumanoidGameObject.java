@@ -2,7 +2,10 @@ package by.bsuir.kovalev.jail.framework;
 
 import java.awt.Rectangle;
 
+import javax.swing.JOptionPane;
+
 import by.bsuir.kovalev.jail.objects.Block;
+import by.bsuir.kovalev.jail.objects.ExitDoor;
 import by.bsuir.kovalev.jail.window.Handler;
 
 public abstract class HumanoidGameObject extends GameObject{
@@ -48,6 +51,16 @@ public abstract class HumanoidGameObject extends GameObject{
 				checkForLeftIntersectionWithPlayer((Block)tempObject);
 				checkForRightIntersectionWithPlayer((Block)tempObject);	
 			}
+			else if (tempObject.getObjectId() == ObjectId.ExitDoor){
+				checkForExitCondition((ExitDoor)tempObject);
+			}
+		}
+	}
+	
+	private void checkForExitCondition(ExitDoor exitDoor){
+		if(this.getBoundsTop(width, height).intersects(exitDoor.getBounds())){
+			JOptionPane.showMessageDialog(null, "THE END");
+			System.exit(1);
 		}
 	}
 	

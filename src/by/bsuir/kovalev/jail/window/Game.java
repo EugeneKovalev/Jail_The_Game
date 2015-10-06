@@ -15,6 +15,7 @@ import by.bsuir.kovalev.jail.framework.ObjectId;
 import by.bsuir.kovalev.jail.framework.Sound;
 import by.bsuir.kovalev.jail.framework.Texture;
 import by.bsuir.kovalev.jail.objects.Block;
+import by.bsuir.kovalev.jail.objects.ExitDoor;
 import by.bsuir.kovalev.jail.objects.Player;
 import by.bsuir.kovalev.jail.objects.Security;
 
@@ -35,6 +36,7 @@ public class Game extends Canvas implements Runnable{
 	private BufferedImage metalWall = null;
 	private BufferedImage rustyDoor = null;
 	private BufferedImage exitLabel = null;
+	private BufferedImage intro = null;
 	
 	public static void main(String args[]) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
 		new Window(800, 600, "Jail The Game", new Game());
@@ -46,7 +48,7 @@ public class Game extends Canvas implements Runnable{
 			return;
 		isRunning = true;
 		Sound soundtrack = new Sound("/soundtrack.wav");
-		//soundtrack.start();
+		soundtrack.start();
 		thread = new Thread(this);
 		thread.start();
 	}
@@ -54,6 +56,7 @@ public class Game extends Canvas implements Runnable{
 	public void run() {
 		initializeGameObjects();
 		this.requestFocus();
+		handler.addObject(new ExitDoor(750, 32, rustyDoor.getWidth(), rustyDoor.getHeight(), ObjectId.ExitDoor));
 		displayGameObjects();
 	}
 	
@@ -81,7 +84,7 @@ public class Game extends Canvas implements Runnable{
 				tick();
 				delta--;
 			}
-			if (animationLimiter == amountOfTicksPerSecond/5){
+			if (animationLimiter == amountOfTicksPerSecond/10){
 				keyInput.checkButtonsState();
 				animationLimiter = 0;
 			}
@@ -105,6 +108,8 @@ public class Game extends Canvas implements Runnable{
 			this.createBufferStrategy(3);
 			return;
 		}
+		//BufferedImage intro = loader.loadImage("/intro.png");
+		
 		drawGame(bufferStrategy);
 		bufferStrategy.show();
 	}
@@ -112,7 +117,8 @@ public class Game extends Canvas implements Runnable{
 	private void drawGame(BufferStrategy bufferStrategy){
 		Graphics2D graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
 		graphics2D.fillRect(0, 0, getWidth(), getHeight());
-		graphics2D.translate((int)camera.getX(), (int)camera.getY());
+		graphics2D.drawImage(intro, 170, 10, this);
+		/*graphics2D.translate((int)camera.getX(), (int)camera.getY());
 		for(int i=0; i<8; i++)
 			graphics2D.drawImage(brokenTileWall, 300+i*brokenTileWall.getWidth(), 32, this);
 		for(int i=0; i<3; i++)
@@ -122,13 +128,14 @@ public class Game extends Canvas implements Runnable{
 		for(int i=0; i<9; i++)
 			graphics2D.drawImage(metalWall, 300+i*metalWall.getWidth(), 160, this);
 		graphics2D.drawImage(rustyDoor, 750, 32, this);
-		graphics2D.drawImage(exitLabel, 765, 42, this);
-		handler.render(graphics2D);
+		graphics2D.drawImage(exitLabel, 765, 42, this);*/
+		//handler.render(graphics2D);
 		graphics2D.dispose();
 	}
 	
 	private void loadLevel(){
 		BufferedImageLoader loader = new BufferedImageLoader();
+		intro = loader.loadImage("/intro.png");
 		levelImage = loader.loadImage("/level.png");
 		brokenTileWall = loader.loadImage("/wall.png");
 		mossyWall = loader.loadImage("/mossy_wall.png");

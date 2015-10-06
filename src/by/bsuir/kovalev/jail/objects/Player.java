@@ -29,6 +29,7 @@ public class Player extends HumanoidGameObject{
 			yVelocity += gravity;
 		}
 		processCollisionCondition(handler);
+		//checkExitCondition();
 	}
 	
 	public void render(Graphics g) {

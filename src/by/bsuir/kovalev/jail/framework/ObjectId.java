@@ -5,5 +5,6 @@ public enum ObjectId {
 	Security(),
 	Block(),
 	Bullet(),
-	ManInCharge();
+	ManInCharge(),
+	ExitDoor();
 }
