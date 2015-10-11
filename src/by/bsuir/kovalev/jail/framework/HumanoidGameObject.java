@@ -51,8 +51,14 @@ public abstract class HumanoidGameObject extends GameObject{
 				checkForLeftIntersectionWithPlayer((Block)tempObject);
 				checkForRightIntersectionWithPlayer((Block)tempObject);	
 			}
-			else if (tempObject.getObjectId() == ObjectId.ExitDoor){
-				checkForExitCondition((ExitDoor)tempObject);
+			else if (tempObject.getObjectId() == ObjectId.ExitDoor && this.getObjectId()==ObjectId.Player){
+				this.checkForExitCondition((ExitDoor)tempObject);
+			}
+			else if (this.getObjectId() == ObjectId.Player && tempObject.getObjectId() == ObjectId.Security){
+				if(this.getBounds().intersects(tempObject.getBounds())){
+					JOptionPane.showMessageDialog(null, "YOU ARE DEAD");
+					System.exit(1);
+				}
 			}
 		}
 	}

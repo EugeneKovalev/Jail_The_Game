@@ -7,7 +7,6 @@ import by.bsuir.kovalev.jail.objects.Player;
 import by.bsuir.kovalev.jail.window.Handler;
 
 public class KeyInput extends KeyAdapter{
-	
 	protected Handler handler;
 	private boolean isPressedA = false;
 	private boolean isPressedD = false;
