@@ -17,12 +17,12 @@ public class MouseInput extends MouseAdapter{
 	
 	public void mousePressed(MouseEvent e){
 		int mouseKey = e.getButton();
-		for(int i = 0; i < handler.objectList.size(); i++){
-			GameObject tempObject = handler.objectList.get(i);
-			if(tempObject.getObjectId() == ObjectId.Player){
-				if(mouseKey == MouseEvent.BUTTON1)runBullet(tempObject); 
+			for(int i = 0; i < handler.objectList.size(); i++){
+				GameObject tempObject = handler.objectList.get(i);
+				if(tempObject.getObjectId() == ObjectId.Player){
+					if(mouseKey == MouseEvent.BUTTON1)runBullet(tempObject); 
+				}
 			}
-		}
 	}
 	
 	private void runBullet(GameObject tempObject){
